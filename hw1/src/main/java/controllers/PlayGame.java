@@ -29,20 +29,16 @@ public class PlayGame {
       config.addStaticFiles("/public");
     }).start(PORT_NUMBER);
 
-    // Test Echo Server.
-    app.post("/echo", ctx -> {
-      ctx.result(ctx.body());
-    });
-
-    // Get new game and redirect to tictactoe.html
-    app.get("/", ctx -> {
-      ctx.redirect("/tictactoe.html");
-    });
-
     // Create GameBoard Object and GSON builders.
     GameBoard gameBoard = new GameBoard();
     GsonBuilder builder = new GsonBuilder();
     Gson gson = builder.create();
+
+    // Get new game and redirect to tictactoe.html
+    app.get("/", ctx -> {
+      ctx.redirect("/tictactoe.html");
+      gameBoard.initializeGameBoard();
+    });
 
     app.get("/newgame", ctx -> {
       ctx.redirect("/tictactoe.html");
