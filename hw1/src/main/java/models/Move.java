@@ -13,18 +13,10 @@ public class Move {
   /** Constructor for Move object and throw exception if X or Y are out of range. */
   public Move(Player inputPlayer, String inputMove) throws Exception {
     player = inputPlayer;
-    try {
-      int x = Character.getNumericValue(inputMove.charAt(2));
-      int y = Character.getNumericValue(inputMove.charAt(6));
-      if (x >= 0 && x <= 2 && y >= 0 && y <= 2) {
-        this.moveX = x;
-        this.moveY = y;
-      } else {
-        throw new NumberFormatException();
-      }
-    } catch (NumberFormatException e) {
-      throw e;
-    }
+    int x = Character.getNumericValue(inputMove.charAt(2));
+    int y = Character.getNumericValue(inputMove.charAt(6));
+    this.moveX = x;
+    this.moveY = y;
   }
 
   public Player getPlayer() {
