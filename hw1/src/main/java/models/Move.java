@@ -20,10 +20,10 @@ public class Move {
         this.moveX = x;
         this.moveY = y;
       } else {
-        throw new Exception();
+        throw new NumberFormatException();
       }
-    } catch (Exception e) {
-      throw new Exception();
+    } catch (NumberFormatException e) {
+      throw e;
     }
   }
 

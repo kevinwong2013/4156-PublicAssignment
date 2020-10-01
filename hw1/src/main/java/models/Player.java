@@ -6,7 +6,7 @@ public class Player {
 
   private int id; // 1 or 2
 
-  Player(char inputType, int inputId) {
+  public Player(char inputType, int inputId) {
     type = inputType;
     id = inputId;
   }

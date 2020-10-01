@@ -19,4 +19,8 @@ public class Message {
     this.code = code;
     this.message = messages[code];
   }
+
+  public int getMessageCode() {
+    return this.code;
+  }
 }

@@ -48,12 +48,27 @@ public class GameBoard {
     p2 = new Player(p2Type, 2);
   }
 
+  /** Setter to directly set board state for testing. */
+  public void setBoardState(char[][] state) {
+    if (state[0].length == 3 & state[1].length == 3) {
+      this.boardState = state;
+    }
+  }
+
   public char getP1Type() {
     return this.p1.getPlayerType();
   }
 
   public int getCurrentTurn() {
     return this.turn;
+  }
+
+  public int getWinner() {
+    return this.winner;
+  }
+
+  public boolean isDraw() {
+    return this.isDraw;
   }
 
   /** Return the stored player object. */
@@ -182,12 +197,10 @@ public class GameBoard {
     Player p = playerMove.getPlayer();
     int x = playerMove.getX();
     int y = playerMove.getY();
-    if (p.getPlayerId() == this.turn) {
-      if (this.boardState[x][y] != 'O' && this.boardState[x][y] != 'X') {
-        this.boardState[x][y] = p.getPlayerType();
-        this.checkDraw();
-        this.turn = 3 - this.turn;
-      }
+    if (this.boardState[x][y] != 'O' & this.boardState[x][y] != 'X') {
+      this.boardState[x][y] = p.getPlayerType();
+      this.checkDraw();
+      this.turn = 3 - this.turn;
     }
   }
 

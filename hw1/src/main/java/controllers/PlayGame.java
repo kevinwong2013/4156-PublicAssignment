@@ -12,7 +12,7 @@ import models.Player;
 import org.eclipse.jetty.websocket.api.Session;
 
 
-class PlayGame {
+public class PlayGame {
 
   private static final int PORT_NUMBER = 8080;
 
@@ -39,14 +39,15 @@ class PlayGame {
       ctx.redirect("/tictactoe.html");
     });
 
-    app.get("/newgame", ctx -> {
-      ctx.redirect("/tictactoe.html");
-    });
-
     // Create GameBoard Object and GSON builders.
     GameBoard gameBoard = new GameBoard();
     GsonBuilder builder = new GsonBuilder();
     Gson gson = builder.create();
+
+    app.get("/newgame", ctx -> {
+      ctx.redirect("/tictactoe.html");
+      gameBoard.initializeGameBoard();
+    });
 
     // Add player 2 and mark start of game
     app.get("/joingame", ctx -> {
@@ -78,8 +79,9 @@ class PlayGame {
     app.post("/move/:playerId", ctx -> {
       String playerID = ctx.pathParam("playerId");
       Player player = gameBoard.getPlayerObject(Integer.parseInt(playerID));
+
       // Check move is made by the correct player
-      if (player.getPlayerId() != gameBoard.getCurrentTurn()) {
+      if (Integer.parseInt(playerID) != gameBoard.getCurrentTurn()) {
         Message msg = new Message(2);
         String msgJson = gson.toJson(msg);
         ctx.result(msgJson);
@@ -91,6 +93,7 @@ class PlayGame {
           gameBoard.makeMove(playerMove);
           String gameBoardJson = gson.toJson(gameBoard);
           sendGameBoardToAllPlayers(gameBoardJson);
+          ctx.result(gameBoardJson);
         } catch (Exception e) {
           Message msg = new Message(1);
           String msgJson = gson.toJson(msg);
